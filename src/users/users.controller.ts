@@ -1,28 +1,40 @@
-import { Controller, Post, Param, Body, Get, Put, Delete } from '@nestjs/common';
+import { Controller, Post, Param, Body, Get, Put, Delete, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UserService } from './users.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersService } from './users.service';
+import { User } from './user.entity';
 
 @Controller('users')
 export class UsersController {
-  // constructor(private readonly userService: UserService) {}
+  constructor(private readonly usersService: UsersService) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<string> {
-    return 'Created new user';
+  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersService.createUser(createUserDto);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
+  async findAll(): Promise<User[]> {
+    return await this.usersService.findAll();
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<string> {
-    return 'Get some user by id';
+  async findById(@Param('id') id: number): Promise<User> {
+    return await this.usersService.findById(id);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
-  async updateById(@Param('id') id: string, @Body() updateUserDto: CreateUserDto): Promise<string> {
-    return 'Update user by id';
+  async updateById(@Param('id') id: number, @Body() data: UpdateUserDto): Promise<User> {
+    return await this.usersService.updateById(id, data);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
-  async deleteById(@Param('id') id: string): Promise<string> {
-    return 'Remove user by id';
+  async removeById(@Param('id') id: number): Promise<User> {
+    return await this.usersService.removeById(id);
   }
 }
