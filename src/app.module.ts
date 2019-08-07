@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD } from './constants';
+import { ColumnsModule } from './columns/columns.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD } from './constants
     }),
     UsersModule,
     AuthModule,
+    ColumnsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
