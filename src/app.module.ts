@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD } from './constants';
 import { ColumnsModule } from './columns/columns.module';
+import { CardsModule } from './cards/cards.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ColumnsModule } from './columns/columns.module';
     UsersModule,
     AuthModule,
     ColumnsModule,
+    CardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
