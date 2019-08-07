@@ -21,7 +21,7 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  getProfile(@Request() req) {
+  async getProfile(@Request() req) {
     return req.user;
   }
 
@@ -45,8 +45,8 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
-  async updateById(@Param('id') id: number, @Body() data: UpdateUserDto): Promise<User> {
-    return await this.usersService.updateById(id, data);
+  async updateById(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return await this.usersService.updateById(id, updateUserDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

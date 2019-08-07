@@ -28,9 +28,9 @@ export class UsersService {
     return await this.usersRepository.findOne({ username });
   }
 
-  async updateById(id: number, data: UpdateUserDto): Promise<User> {
+  async updateById(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user: User = await this.findById(id);
-    return await this.usersRepository.save({...user, ...data});
+    return await this.usersRepository.save({...user, ...updateUserDto});
   }
 
   async removeById(id: number): Promise<User> {
