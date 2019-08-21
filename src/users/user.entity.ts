@@ -1,33 +1,20 @@
-import {
-  Entity,
-  Column as OriginalColumn,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  RelationId,
-  Unique,
-} from 'typeorm';
-import { Exclude } from 'class-transformer';
-
-import { Column } from '../columns/column.entity';
+import { Unique, RelationId, OneToMany, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column as EntityColumn } from '../columns/column.entity';
 
 @Entity()
-@Unique(['username', 'email'])
+@Unique(['username'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OriginalColumn({ length: 500 })
+  @Column()
   username: string;
 
-  @OriginalColumn({ length: 500, default: null })
-  email?: string;
-
-  @Exclude()
-  @OriginalColumn('text')
+  @Column()
   password: string;
 
-  @OneToMany(type => Column, column => column.user)
-  columns: Column[];
+  @OneToMany(type => EntityColumn, column => column.user)
+  columns: EntityColumn[];
 
   @RelationId((user: User) => user.columns)
   columnsIds: number[];

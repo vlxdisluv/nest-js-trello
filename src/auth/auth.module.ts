@@ -9,12 +9,12 @@ import { jwtConstants } from './constants';
 
 @Module({
   imports: [
+    forwardRef(() => UsersModule),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '900s' },
     }),
-    forwardRef(() => UsersModule),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],

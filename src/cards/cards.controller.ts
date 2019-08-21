@@ -1,9 +1,10 @@
-import { Controller, UseGuards, Post, Body, Get, Param, Put, Delete } from '@nestjs/common';
+import { Controller, UseGuards, Request, Post, Body, Get, Param, Put, Delete } from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateCardDto, UpdateCardDto } from './dto';
 import { Card } from './card.entity';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('cards')
 export class CardsController {
   constructor(
@@ -11,7 +12,10 @@ export class CardsController {
   ) {}
 
   @Post()
-  async create(@Body() createCardDto: CreateCardDto): Promise<Card> {
+  async create(
+    @Request() { user: { id: userId } }: { user: { id: number }},
+    @Body() createCardDto: CreateCardDto,
+  ): Promise<Card> {
     return await this.cardsService.createCard(createCardDto);
   }
 

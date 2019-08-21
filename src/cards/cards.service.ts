@@ -25,7 +25,8 @@ export class CardsService {
 
   async updateById(id: number, updateCardDto: UpdateCardDto): Promise<Card> {
     const card: Card = await this.findById(id);
-    return await this.cardRepository.save({...card, ...updateCardDto});
+    const updatedCard = { ...card, ...updateCardDto };
+    return await this.cardRepository.save(updatedCard);
   }
 
   async removeById(id: number): Promise<Card> {

@@ -1,25 +1,19 @@
-import {
-  Entity,
-  Column as OriginalColumn,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  RelationId,
-} from 'typeorm';
-import { Column } from '../columns/column.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
+import { Column as EntityColumn } from '../columns/column.entity';
 
 @Entity()
 export class Card {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OriginalColumn({ length: 100 })
+  @Column()
   title: string;
 
-  @OriginalColumn()
+  @Column()
   description: string;
 
-  @ManyToOne(type => Column, column => column.cards)
-  column: Column;
+  @ManyToOne(type => EntityColumn, column => column.cards)
+  column: EntityColumn;
 
   @RelationId((card: Card) => card.column)
   columnId: number;

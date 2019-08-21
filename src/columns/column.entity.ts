@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column as OriginalColumn,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  RelationId,
-  OneToMany,
-} from 'typeorm';
+import { ManyToOne, RelationId, Entity, Column as ORMColum, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Card } from '../cards/card.entity';
 
@@ -14,7 +7,7 @@ export class Column {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OriginalColumn({ length: 100 })
+  @ORMColum()
   title: string;
 
   @ManyToOne(type => User, user => user.columns)
@@ -27,5 +20,5 @@ export class Column {
   cards: Card[];
 
   @RelationId((column: Column) => column.cards)
-  cardsIds: number;
+  cardsIds: number[];
 }

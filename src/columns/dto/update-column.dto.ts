@@ -1,7 +1,3 @@
-import { IsString, IsDefined } from 'class-validator';
-
-export class UpdateUserDto {
-  @IsString()
-  @IsDefined()
+export class UpdateColumnDto {
   readonly title: string;
 }

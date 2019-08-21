@@ -1,11 +1,11 @@
 import { IsString, IsDefined } from 'class-validator';
 
 export class UpdateCardDto {
-  @IsString()
-  @IsDefined()
+  // @IsString()
+  // @IsDefined()
   readonly title: string;
 
-  @IsString()
-  @IsDefined()
+  // @IsString()
+  // @IsDefined()
   readonly description: string;
 }

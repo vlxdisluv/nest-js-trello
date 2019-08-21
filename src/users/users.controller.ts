@@ -1,4 +1,4 @@
-import { Controller, Request, Post, Param, Body, Get, Put, Delete, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Request, Post, Param, Body, Get, Put, Delete, UseGuards, Inject, forwardRef } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -9,49 +9,45 @@ import { AuthService } from '../auth/auth.service';
 @Controller('users')
 export class UsersController {
   constructor(
+    @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {}
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Request() { user }: { user: User }) {
+    return this.authService.login(user);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  async getProfile(@Request() req) {
-    return req.user;
+  getProfile(@Request() { user }: { user: User }) {
+    return user;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.createUser(createUserDto);
+    return this.usersService.createUser(createUserDto);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+    return this.usersService.findAll();
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   async findById(@Param('id') id: number): Promise<User> {
-    return await this.usersService.findById(id);
+    return this.usersService.findById(id);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
   async updateById(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-    return await this.usersService.updateById(id, updateUserDto);
+    return this.usersService.updateById(id, updateUserDto);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
   async removeById(@Param('id') id: number): Promise<User> {
-    return await this.usersService.removeById(id);
+    return this.usersService.removeById(id);
   }
 }
