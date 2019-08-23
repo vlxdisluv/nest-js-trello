@@ -12,25 +12,25 @@ export class CardsService {
   ) {}
 
   async createCard(createCardDto: CreateCardDto): Promise<Card> {
-    return await this.cardRepository.save(createCardDto);
+    return this.cardRepository.save(createCardDto);
   }
 
   async findAll(): Promise<Card[]> {
-    return await this.cardRepository.find();
+    return this.cardRepository.find();
   }
 
   async findById(id: number): Promise<Card> {
-    return await this.cardRepository.findOne({ id });
+    return this.cardRepository.findOne({ id });
   }
 
   async updateById(id: number, updateCardDto: UpdateCardDto): Promise<Card> {
     const card: Card = await this.findById(id);
     const updatedCard = { ...card, ...updateCardDto };
-    return await this.cardRepository.save(updatedCard);
+    return this.cardRepository.save(updatedCard);
   }
 
   async removeById(id: number): Promise<Card> {
     const card: Card = await this.findById(id);
-    return await this.cardRepository.remove(card);
+    return this.cardRepository.remove(card);
   }
 }

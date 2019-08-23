@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, RelationId, OneToMany } from 'typeorm';
 import { Column as EntityColumn } from '../columns/column.entity';
+import { Comment } from '../comments/comment.entity';
 
 @Entity()
 export class Card {
@@ -17,4 +18,10 @@ export class Card {
 
   @RelationId((card: Card) => card.column)
   columnId: number;
+
+  @OneToMany(type => Comment, comment => comment.card)
+  comments: Comment[];
+
+  @RelationId((card: Card) => card.comments)
+  commentsIds: number[];
 }

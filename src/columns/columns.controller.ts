@@ -63,6 +63,16 @@ export class ColumnsController {
     return this.columnsService.createColumnCard(createCardDto, columnId, userId);
   }
 
+  // update a related item by id for card
+  @Put(':columnId/cards/:cardId')
+  async updateColumnCardFk(
+    @Request() { user: { id: userId } }: { user: { id: number }},
+    @Param('columnId') columnId: number,
+    @Param('cardId') cardId: number,
+  ): Promise<Card> {
+    return this.columnsService.updateColumnCardFk(columnId, cardId, userId);
+  }
+
   // @Get(':columnId/cards')
   // async findAllCards(
   //   @Request() { user: { id: userId } }: { user: { id: number }},
