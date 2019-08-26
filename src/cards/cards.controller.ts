@@ -13,28 +13,41 @@ export class CardsController {
 
   @Post()
   async create(
+    @Request() { user: { id: userId }}: { user: { id: number }},
     @Body() createCardDto: CreateCardDto,
   ): Promise<Card> {
-    return this.cardsService.createCard(createCardDto);
+    return this.cardsService.createCard(createCardDto, userId);
   }
 
   @Get()
-  async findAll(): Promise<Card[]> {
-    return this.cardsService.findAll();
+  async findAll(
+    @Request() { user: { id: userId }}: { user: { id: number }},
+  ): Promise<Card[]> {
+    return this.cardsService.findAll(userId);
   }
 
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<Card> {
-    return this.cardsService.findById(id);
+  async findById(
+    @Request() { user: { id: userId }}: { user: { id: number }},
+    @Param('id') id: number,
+  ): Promise<Card> {
+    return this.cardsService.findById(id, userId);
   }
 
   @Put(':id')
-  async updateById(@Param('id') id: number, @Body() updateCardDto: UpdateCardDto): Promise<Card> {
-    return this.cardsService.updateById(id, updateCardDto);
+  async updateById(
+    @Request() { user: { id: userId }}: { user: { id: number }},
+    @Param('id') id: number,
+    @Body() updateCardDto: UpdateCardDto,
+  ): Promise<Card> {
+    return this.cardsService.updateById(id, updateCardDto, userId);
   }
 
   @Delete(':id')
-  async removeById(@Param('id') id: number): Promise<Card> {
-    return this.cardsService.removeById(id);
+  async removeById(
+    @Request() { user: { id: userId }}: { user: { id: number }},
+    @Param('id') id: number,
+  ): Promise<Card> {
+    return this.cardsService.removeById(id, userId);
   }
 }

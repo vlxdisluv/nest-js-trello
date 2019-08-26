@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, RelationId, OneToMany } from 'typeorm';
 import { Column as EntityColumn } from '../columns/column.entity';
 import { Comment } from '../comments/comment.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Card {
@@ -24,4 +25,10 @@ export class Card {
 
   @RelationId((card: Card) => card.comments)
   commentsIds: number[];
+
+  @ManyToOne(type => User, user => user.cards)
+  user: User;
+
+  @RelationId((card: Card) => card.user)
+  userId: number;
 }

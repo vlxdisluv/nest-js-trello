@@ -8,4 +8,5 @@ export class UpdateCardDto {
   // @IsString()
   // @IsDefined()
   readonly description: string;
+  readonly columnId: number;
 }

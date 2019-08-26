@@ -13,9 +13,10 @@ export class CommentsController {
 
   @Post()
   async create(
+    @Request() { user: { id: userId }}: { user: { id: number }},
     @Body() createCommentDto: CreateCommentDto,
   ): Promise<Comment> {
-    return this.commentsService.createComment(createCommentDto);
+    return this.commentsService.createComment(createCommentDto, userId);
   }
 
   @Get()

@@ -8,4 +8,5 @@ export class CreateCardDto {
   // @IsString()
   // @IsDefined()
   readonly description: string;
+  readonly columnId: number;
 }
